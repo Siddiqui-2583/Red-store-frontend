@@ -1,7 +1,13 @@
 .card {
+  width: 220px;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 8px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  width: 300px;
+  text-align: center;
+  float: left;
+  
 }
 
 .card:hover {
@@ -9,8 +15,16 @@
 }
 .card img{
     height: 300px;
-    padding: 10px 20px;
 }
 .container {
   padding: 2px 16px;
+}
+.btn{
+  background-image: linear-gradient(to bottom, #FF563F 0%, #ee4933ec 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 25px;
+    cursor: pointer;
+    width: 100%;
 }

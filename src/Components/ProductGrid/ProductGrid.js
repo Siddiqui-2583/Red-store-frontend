@@ -3,9 +3,14 @@ import './ProductGrid.css'
 import ProductCard from '../ProductCard/ProductCard'
 const ProductGrid = () => {
     return (
-        <div>
-            <ProductCard/>
-        </div>
+      <div className="product-grid">
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+      </div>
     );
 };
 
