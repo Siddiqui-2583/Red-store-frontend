@@ -1,58 +1,72 @@
 import './App.css';
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import axios from "axios";
 import Header from './Components/Header/Header';
 import ProductGrid from './Components/ProductGrid/ProductGrid'
 import Cart from './Components/Cart/Cart'
+import SuccessMsg from './Components/SuccessMsg/SuccessMsg'
+// import Loading from './Components/Loading/Loading';
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  // function toggleCart() {
-  //   var x = document.getElementById("cartItems");
-  //   console.log(document.getElementById("cartItems"));
-    // if (x.style.display === "none") {
-    //   x.style.display = "block";
-    // } else {
-    //   x.style.display = "none";
-    // }
-  // }
-  console.log(isOpen)
+  const [products, setProducts] = useState([])
+  const [cart, setCart] = useState([]);
+
+  const handleAddToCart = (product) => {
+    console.log(product)
+    let newCart = [...cart, product]
+    console.log('new cart: ',newCart)
+    setCart(newCart);
+    // console.log([...cart, product]);
+    // console.log("cart: ", cart);
+  };
+
+
+  useEffect(() => {
+    axios
+      .get("https://full-stack-engineer-task-mtech.herokuapp.com/all-products")
+      .then((response) => {
+        setProducts(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => console.log(err));
+    
+  }, []);
   return (
     <div>
       <Router>
-        <Header setIsOpen={setIsOpen} />
+        <Header
+          cartItemNum={cart.length}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
         <Switch>
           <Route exact path="/">
-            {/* <ProductGrid /> */}
-            <div>
-              <div id="products">
-                <ProductGrid />
-              </div>
-              <div id="cartItems">
-                <Cart />
-              </div>
-            </div>
-          </Route>
-          <Route path="/cart">
-            <div>
-              <div id="products">
-                <ProductGrid />
-              </div>
-              <div id="cartItems">
-                <Cart />
-              </div>
-            </div>
-            {isOpen === true ? (
+            {!isOpen ? (
+              <ProductGrid
+                products={products}
+                cart={cart}
+                setCart={setCart}
+                handleAddToCart={handleAddToCart}
+              />
+            ) : (
               <div>
                 <div id="products">
-                  <ProductGrid />
+                  <ProductGrid
+                    products={products}
+                    cart={cart}
+                    handleAddToCart={handleAddToCart}
+                  />
                 </div>
                 <div id="cartItems">
-                  <Cart />
+                  <Cart cart={cart} setCart={setCart} />
                 </div>
               </div>
-            ) : (
-              <ProductGrid />
             )}
+          </Route>
+
+          <Route path="/order-successful">
+            <SuccessMsg />
           </Route>
         </Switch>
       </Router>

@@ -5,31 +5,36 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 ;
-const CartItem = ({subtotal, setSubtotal, unitPrice}) => {
-  const [price, setPrice] = useState(0);
+const CartItem = ({ total, setTotal, title, unitPrice,cart,setCart }) => {
+
+  unitPrice=parseInt(unitPrice);
+  const [subtotal, setSubtotal] = useState(0);
   const [quantity, setquantity] = useState(0);
   
   const handlePlus = () => {
     setquantity(quantity+1);
-    setPrice(price + unitPrice);
-    setSubtotal(subtotal +unitPrice);
+    setSubtotal(subtotal + unitPrice);
+    setTotal(total + unitPrice);
   }
   const handleMinus = () => {
     if (quantity !== 0) {
       setquantity(quantity - 1);
-      setPrice(price - unitPrice);
       setSubtotal(subtotal - unitPrice);
+      setTotal(total - unitPrice);
     }
     
   };
- 
+  // const handleDelete = () => {
+  //   const newCart = cart.map((pd) => pd.title !== title);
+  //     setCart(newCart);
+  // };
     return (
       <div className="cart-item">
         <div>
-          <h4>Maron T-shirt</h4>
-          <h4>
-            $<span>{price}</span>
-          </h4>
+          <h4>{title}</h4>
+          <p>
+            Subtotal: $<span>{subtotal}</span>
+          </p>
         </div>
 
         {/* <input id="firstClass" class="inp-style inp-width" type="number" name="" value="0"></input> */}
@@ -41,6 +46,9 @@ const CartItem = ({subtotal, setSubtotal, unitPrice}) => {
           <button onClick={handlePlus}>
             <FontAwesomeIcon icon={faPlus} />
           </button>
+          {/* <button onClick={() => handleDelete(title)}>
+            <FontAwesomeIcon id="crossIcon" icon={faTrash} />
+          </button> */}
           <FontAwesomeIcon id="crossIcon" icon={faTrash} />
         </div>
       </div>

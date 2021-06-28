@@ -1,13 +1,29 @@
 import React from 'react';
-// import {Link} from 'react-router-dom'
 import './Header.css'
 import logo from "../../Images/logo.png";
 import cart from "../../Images/cart.png";
-const Header = ({ setIsOpen }) => {
+const Header = ({ isOpen, setIsOpen, cartItemNum }) => {
+  // console.log(cartItemNum)
+  const toggleCart = () => {
+    if (isOpen === true) {
+      setIsOpen(false);
+      console.log(isOpen)
+    } 
+    else{
+      setIsOpen(true);
+      console.log(isOpen);
+    }
+  }
   return (
     <div className="header">
       <img className="logo" src={logo} alt="logo" />
-      <img onClick={() => setIsOpen(true)} className="cartImg" src={cart} alt="cart" />
+      <div className="cart-badge">
+        <img onClick={toggleCart} className="cartImg" src={cart} alt="cart" />
+        <p>
+          {" "}
+          Cart: <span>{cartItemNum}</span> items
+        </p>
+      </div>
     </div>
   );
 };
